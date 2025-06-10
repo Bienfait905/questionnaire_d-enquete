@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire Leadership - Pullman Karavia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        // Initialisez EmailJS avec votre User ID
+        (function() {
+            emailjs.init("To5R4_oCqk-WDNuBp"); // Remplacez par votre User ID EmailJS
+        })();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a3a6c 0%, #2c5282 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: #2c5282;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hotel-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .hotel-logo i {
+            font-size: 28px;
+            color: #2c5282;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .intro {
+            background: #f0f7ff;
+            padding: 25px 40px;
+            border-bottom: 1px solid #d1e3f8;
+        }
+
+        .intro p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #2d3748;
+        }
+
+        .progress-container {
+            background: #e0e0e0;
+            height: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #3182ce;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .form-container {
+            padding: 30px 40px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: #2c5282;
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 600;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s;
+            margin-bottom: 30px;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #3182ce;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #2c5282;
+            display: flex;
+            align-items: center;
+        }
+
+        .question h3 i {
+            margin-right: 10px;
+            color: #3182ce;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            background: #edf2f7;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background: #e2e8f0;
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            background: #3182ce;
+            color: white;
+            border-color: #3182ce;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            min-height: 120px;
+            resize: vertical;
+            transition: border 0.3s;
+            font-family: inherit;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+        }
+
+        .likert-scale {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .likert-item {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .likert-question {
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .likert-options {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .likert-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .likert-option input {
+            margin-bottom: 5px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn i {
+            margin: 0 5px;
+        }
+
+        .btn-prev {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-prev:hover {
+            background: #cbd5e0;
+        }
+
+        .btn-next {
+            background: #3182ce;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background: #2b6cb0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(49, 130, 206, 0.4);
+        }
+
+        .btn-submit {
+            background: #38a169;
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background: #2f855a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(56, 161, 105, 0.4);
+        }
+
+        .confirmation {
+            text-align: center;
+            padding: 50px 40px;
+            display: none;
+        }
+
+        .confirmation i {
+            font-size: 5rem;
+            color: #38a169;
+            margin-bottom: 25px;
+        }
+
+        .confirmation h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #2c5282;
+        }
+
+        .confirmation p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .confirmation .btn-restart {
+            background: #3182ce;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+        }
+
+        .confirmation .btn-restart:hover {
+            background: #2b6cb0;
+        }
+
+        .conditional-field {
+            margin-top: 15px;
+            padding-left: 30px;
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            header, .intro, .form-container {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+                margin-top: 10px;
+            }
+            
+            .hotel-logo {
+                top: 15px;
+                left: 15px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .hotel-logo i {
+                font-size: 24px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .likert-options {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .likert-option {
+                flex-direction: row;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="hotel-logo">
+                <i class="fas fa-hotel"></i>
+            </div>
+            <h1><i class="fas fa-chart-line"></i> Étude Leadership & Culture d'Entreprise</h1>
+            <p>Hôtel Pullman Karavia de Lubumbashi</p>
+        </header>
+        
+        <div class="intro">
+            <p>Dans un contexte de compétitivité croissante, les entreprises sont appelées à développer des cultures organisationnelles solides et partagées. Ce questionnaire vise à recueillir vos perceptions sur la manière dont le leadership contribue à la culture organisationnelle.</p>
+            <p><strong>Confidentialité assurée :</strong> Vos réponses resteront strictement confidentielles et seront utilisées exclusivement dans le cadre de cette recherche.</p>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="form-container">
+            <!-- Section I: Informations générales -->
+            <div class="section-title">
+                <i class="fas fa-user-circle"></i> I. Informations générales
+            </div>
+            
+            <!-- Question 1 -->
+            <div class="question-container active" id="question1">
+                <div class="question">
+                    <h3><i class="fas fa-venus-mars"></i> 1. Sexe</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="sexe" value="masculin"> Masculin
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="sexe" value="feminin"> Féminin
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <div></div>
+                    <button class="btn btn-next" onclick="showQuestion(2)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 2 -->
+            <div class="question-container" id="question2">
+                <div class="question">
+                    <h3><i class="fas fa-birthday-cake"></i> 2. Tranche d'âge</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="age" value="moins25"> Moins de 25 ans
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="age" value="25-34"> 25-34 ans
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="age" value="35-44"> 35-44 ans
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="age" value="45+"> 45 ans et plus
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(1)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(3)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 3 -->
+            <div class="question-container" id="question3">
+                <div class="question">
+                    <h3><i class="fas fa-sitemap"></i> 3. Niveau hiérarchique</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="niveau" value="employe"> Employé
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="niveau" value="maitrise"> Agent de maîtrise
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="niveau" value="cadre"> Cadre
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="niveau" value="direction"> Cadre supérieur / Direction
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(2)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(4)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 4 -->
+            <div class="question-container" id="question4">
+                <div class="question">
+                    <h3><i class="fas fa-business-time"></i> 4. Ancienneté dans l'entreprise</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="anciennete" value="moins1"> Moins d'un an
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="anciennete" value="1-3"> 1 à 3 ans
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="anciennete" value="4-6"> 4 à 6 ans
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="anciennete" value="plus6"> Plus de 6 ans
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(3)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(5)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section II: Perception du leadership -->
+            <div class="section-title">
+                <i class="fas fa-users"></i> II. Perception du leadership
+            </div>
+            
+            <!-- Question 5 -->
+            <div class="question-container" id="question5">
+                <div class="question">
+                    <h3><i class="fas fa-user-tie"></i> 5. Style de leadership dominant</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="leadership" value="autoritaire"> Autoritaire
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="leadership" value="participatif"> Participatif
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="leadership" value="delegatif"> Délégatif
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="leadership" value="transformateur"> Transformateur
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="leadership" value="transactionnel"> Transactionnel
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="leadership" value="autre" id="autreLeadership"> Autre
+                        </label>
+                    </div>
+                    <div class="conditional-field" id="autreLeadershipField">
+                        <textarea id="autreLeadershipText" placeholder="Veuillez préciser..."></textarea>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(4)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(6)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 6 -->
+            <div class="question-container" id="question6">
+                <div class="question">
+                    <h3><i class="fas fa-check-circle"></i> 6. Niveau d'accord avec les affirmations suivantes</h3>
+                    <p><small>(1 = Pas du tout d'accord ; 5 = Tout à fait d'accord)</small></p>
+                    
+                    <div class="likert-scale">
+                        <div class="likert-item">
+                            <div class="likert-question">Les dirigeants ont une vision claire et mobilisatrice</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="vision" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="vision" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="vision" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="vision" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="vision" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">Le leadership favorise l'innovation et l'initiative</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="innovation" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="innovation" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="innovation" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="innovation" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="innovation" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">Le leadership s'appuie sur des valeurs organisationnelles explicites</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="valeurs" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="valeurs" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="valeurs" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="valeurs" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="valeurs" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">Les leaders reconnaissent et valorisent les efforts des employés</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="reconnaissance" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="reconnaissance" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="reconnaissance" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="reconnaissance" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="reconnaissance" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">Le leadership améliore la cohésion interne et le sentiment d'appartenance</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="cohesion" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="cohesion" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="cohesion" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="cohesion" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="cohesion" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(5)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(7)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section III: Culture d'entreprise -->
+            <div class="section-title">
+                <i class="fas fa-building"></i> III. Culture d'entreprise
+            </div>
+            
+            <!-- Question 7 -->
+            <div class="question-container" id="question7">
+                <div class="question">
+                    <h3><i class="fas fa-landmark"></i> 7. Culture d'entreprise identifiable et cohérente</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="culture" value="oui"> Oui
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="culture" value="non"> Non
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="culture" value="partiellement"> Partiellement
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(6)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(8)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 8 -->
+            <div class="question-container" id="question8">
+                <div class="question">
+                    <h3><i class="fas fa-cube"></i> 8. Éléments incarnant la culture d'entreprise</h3>
+                    <p><small>(plusieurs réponses possibles)</small></p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="checkbox" name="elements" value="valeurs"> Valeurs affichées et pratiquées
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="elements" value="comportement"> Comportement des responsables
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="elements" value="normes"> Normes et procédures internes
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="elements" value="rituels"> Rituels (réunions, événements)
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="elements" value="communication"> Habitudes de communication
+                        </label>
+                        <label class="option">
+                            <input type="checkbox" name="elements" value="rh"> Politiques RH
+                        </label>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(7)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(9)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 9 -->
+            <div class="question-container" id="question9">
+                <div class="question">
+                    <h3><i class="fas fa-user-plus"></i> 9. Intégration des nouveaux employés</h3>
+                    <p>Le processus d'intégration contribue-t-il à transmettre la culture d'entreprise ?</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="integration" value="oui" id="integrationOui"> Oui
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="integration" value="non"> Non
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="integration" value="partiellement"> En partie
+                        </label>
+                    </div>
+                    <div class="conditional-field" id="integrationOuiField">
+                        <textarea id="integrationOuiText" placeholder="Si oui, comment ?"></textarea>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(8)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(10)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section IV: Interaction leadership-culture -->
+            <div class="section-title">
+                <i class="fas fa-handshake"></i> IV. Interaction leadership - culture organisationnelle
+            </div>
+            
+            <!-- Question 10 -->
+            <div class="question-container" id="question10">
+                <div class="question">
+                    <h3><i class="fas fa-shapes"></i> 10. Contribution du leadership à la culture d'entreprise</h3>
+                    <p>Le leadership contribue-t-il à façonner ou maintenir une culture d'entreprise forte ?</p>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="contribution" value="oui"> Oui
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="contribution" value="non"> Non
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="contribution" value="partiellement"> En partie
+                        </label>
+                    </div>
+                    <textarea id="contributionText" placeholder="Expliquez votre réponse..." style="margin-top: 20px;"></textarea>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(9)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(11)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 11 -->
+            <div class="question-container" id="question11">
+                <div class="question">
+                    <h3><i class="fas fa-star"></i> 11. Évaluation des affirmations suivantes</h3>
+                    <p><small>(1 = Pas du tout d'accord ; 5 = Tout à fait d'accord)</small></p>
+                    
+                    <div class="likert-scale">
+                        <div class="likert-item">
+                            <div class="likert-question">Les dirigeants incarnent les valeurs de l'entreprise</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="incarnation" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="incarnation" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="incarnation" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="incarnation" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="incarnation" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">Le leadership stimule l'adhésion aux normes internes</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="adhesion" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="adhesion" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="adhesion" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="adhesion" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="adhesion" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">La culture est intégrée aux décisions stratégiques</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="decisions" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="decisions" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="decisions" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="decisions" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="decisions" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">Les leaders préservent l'identité organisationnelle</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="identite" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="identite" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="identite" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="identite" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="identite" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="likert-item">
+                            <div class="likert-question">La culture favorise performance et épanouissement</div>
+                            <div class="likert-options">
+                                <label class="likert-option">
+                                    <input type="radio" name="performance" value="1"> 1
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="performance" value="2"> 2
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="performance" value="3"> 3
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="performance" value="4"> 4
+                                </label>
+                                <label class="likert-option">
+                                    <input type="radio" name="performance" value="5"> 5
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(10)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(12)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Section V: Observations et recommandations -->
+            <div class="section-title">
+                <i class="fas fa-lightbulb"></i> V. Observations et recommandations
+            </div>
+            
+            <!-- Question 12 -->
+            <div class="question-container" id="question12">
+                <div class="question">
+                    <h3><i class="fas fa-exclamation-triangle"></i> 12. Défis du leadership</h3>
+                    <p>Quels sont les défis du leadership en matière de culture d'entreprise ?</p>
+                    <textarea id="defisText"></textarea>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(11)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(13)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 13 -->
+            <div class="question-container" id="question13">
+                <div class="question">
+                    <h3><i class="fas fa-comments"></i> 13. Suggestions d'amélioration</h3>
+                    <p>Suggestions pour améliorer le leadership dans la culture organisationnelle :</p>
+                    <textarea id="suggestionsText"></textarea>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(12)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-next" onclick="showQuestion(14)">Suivant <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <!-- Question 14 -->
+            <div class="question-container" id="question14">
+                <div class="question">
+                    <h3><i class="fas fa-edit"></i> 14. Remarques finales (facultatives)</h3>
+                    <p>Commentaire complémentaire :</p>
+                    <textarea id="commentairesText" placeholder="Vos commentaires supplémentaires..."></textarea>
+                </div>
+                <div class="nav-buttons">
+                    <button class="btn btn-prev" onclick="showQuestion(13)"><i class="fas fa-arrow-left"></i> Précédent</button>
+                    <button class="btn btn-submit" onclick="submitSurvey()">Soumettre <i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Confirmation Screen -->
+        <div class="confirmation" id="confirmation">
+            <i class="fas fa-check-circle"></i>
+            <h2>Merci pour votre participation !</h2>
+            <p>Vos réponses ont été enregistrées avec succès. Vos commentaires sont précieux pour nous aider à améliorer le leadership et la culture d'entreprise de l'hôtel Pullman Karavia.</p>
+            <button class="btn btn-restart" onclick="restartSurvey()"><i class="fas fa-redo"></i> Recommencer le questionnaire</button>
+        </div>
+    </div>
+
+    <script>
+        const totalQuestions = 14;
+        let currentQuestion = 1;
+        
+        // Mettre à jour la barre de progression
+        function updateProgressBar() {
+            const progress = ((currentQuestion - 1) / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        // Afficher une question spécifique
+        function showQuestion(questionNumber) {
+            // Vérifier les réponses requises
+            if (questionNumber > currentQuestion) {
+                if (!validateQuestion(currentQuestion)) {
+                    alert('Veuillez répondre à cette question avant de continuer.');
+                    return;
+                }
+            }
+            
+            document.querySelector('.question-container.active').classList.remove('active');
+            document.getElementById('question' + questionNumber).classList.add('active');
+            currentQuestion = questionNumber;
+            updateProgressBar();
+            
+            // Faire défiler vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Valider la question actuelle
+        function validateQuestion(questionNum) {
+            const questionContainer = document.getElementById('question' + questionNum);
+            const inputs = questionContainer.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+            const textarea = questionContainer.querySelector('textarea');
+            
+            if (inputs.length > 0) {
+                let answered = false;
+                
+                // Pour les questions radio
+                if (inputs[0].type === 'radio') {
+                    const groupName = inputs[0].name;
+                    const selected = document.querySelector(`input[name="${groupName}"]:checked`);
+                    answered = selected !== null;
+                } 
+                // Pour les questions checkbox
+                else {
+                    answered = Array.from(inputs).some(input => input.checked);
+                }
+                
+                if (!answered) return false;
+            }
+            
+            // Pour les questions avec textarea
+            if (textarea && textarea.required && textarea.value.trim() === '') {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Fonction pour collecter toutes les données du formulaire
+        function collectFormData() {
+            const data = {};
+            
+            // Informations générales
+            data.sexe = document.querySelector('input[name="sexe"]:checked')?.value || '';
+            data.age = document.querySelector('input[name="age"]:checked')?.value || '';
+            data.niveau = document.querySelector('input[name="niveau"]:checked')?.value || '';
+            data.anciennete = document.querySelector('input[name="anciennete"]:checked')?.value || '';
+            
+            // Perception du leadership
+            data.leadership = document.querySelector('input[name="leadership"]:checked')?.value || '';
+            data.autreLeadership = document.getElementById('autreLeadershipText')?.value || '';
+            
+            // Échelle de Likert - Perception
+            data.vision = document.querySelector('input[name="vision"]:checked')?.value || '';
+            data.innovation = document.querySelector('input[name="innovation"]:checked')?.value || '';
+            data.valeurs = document.querySelector('input[name="valeurs"]:checked')?.value || '';
+            data.reconnaissance = document.querySelector('input[name="reconnaissance"]:checked')?.value || '';
+            data.cohesion = document.querySelector('input[name="cohesion"]:checked')?.value || '';
+            
+            // Culture d'entreprise
+            data.culture = document.querySelector('input[name="culture"]:checked')?.value || '';
+            
+            // Éléments de culture
+            const elements = [];
+            document.querySelectorAll('input[name="elements"]:checked').forEach(el => {
+                elements.push(el.value);
+            });
+            data.elements = elements.join(', ');
+            
+            // Intégration
+            data.integration = document.querySelector('input[name="integration"]:checked')?.value || '';
+            data.integrationComment = document.getElementById('integrationOuiText')?.value || '';
+            
+            // Interaction leadership-culture
+            data.contribution = document.querySelector('input[name="contribution"]:checked')?.value || '';
+            data.contributionText = document.getElementById('contributionText')?.value || '';
+            
+            // Échelle de Likert - Interaction
+            data.incarnation = document.querySelector('input[name="incarnation"]:checked')?.value || '';
+            data.adhesion = document.querySelector('input[name="adhesion"]:checked')?.value || '';
+            data.decisions = document.querySelector('input[name="decisions"]:checked')?.value || '';
+            data.identite = document.querySelector('input[name="identite"]:checked')?.value || '';
+            data.performance = document.querySelector('input[name="performance"]:checked')?.value || '';
+            
+            // Observations
+            data.defis = document.getElementById('defisText')?.value || '';
+            data.suggestions = document.getElementById('suggestionsText')?.value || '';
+            data.commentaires = document.getElementById('commentairesText')?.value || '';
+            
+            // Ajouter la date et l'heure
+            data.date = new Date().toLocaleString();
+            
+            return data;
+        }
+        
+        // Fonction pour envoyer les réponses par email
+        function submitSurvey() {
+            if (validateQuestion(14)) {
+                // Collecter les données du questionnaire
+                const formData = collectFormData();
+                
+                // Envoyer les données par email
+                emailjs.send("service_x4sf037", "template_3xq81xe", formData)
+                    .then(function(response) {
+                        console.log("Email envoyé avec succès!", response.status, response.text);
+                        // Afficher l'écran de confirmation
+                        document.querySelector('.form-container').style.display = 'none';
+                        document.getElementById('confirmation').style.display = 'block';
+                        document.querySelector('.progress-container').style.display = 'none';
+                    }, function(error) {
+                        console.error("Échec de l'envoi de l'email", error);
+                        alert("Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.");
+                    });
+            } else {
+                alert('Veuillez répondre à cette question avant de soumettre.');
+            }
+        }
+        
+        // Redémarrer le questionnaire
+        function restartSurvey() {
+            // Réinitialiser les réponses
+            document.querySelectorAll('input, textarea').forEach(element => {
+                if (element.type === 'radio' || element.type === 'checkbox') {
+                    element.checked = false;
+                } else {
+                    element.value = '';
+                }
+            });
+            
+            // Réinitialiser l'affichage
+            document.querySelector('.form-container').style.display = 'block';
+            document.getElementById('confirmation').style.display = 'none';
+            document.querySelector('.progress-container').style.display = 'block';
+            
+            // Revenir à la première question
+            showQuestion(1);
+        }
+        
+        // Ajouter des interactions aux options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const input = this.querySelector('input');
+                
+                if (input) {
+                    if (input.type === 'checkbox') {
+                        input.checked = !input.checked;
+                    } else {
+                        // Pour les radios, désélectionner toutes les options dans le groupe
+                        const groupName = input.name;
+                        document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
+                            radio.closest('.option').classList.remove('selected');
+                        });
+                        input.checked = true;
+                    }
+                    
+                    // Mettre à jour l'apparence de sélection
+                    if (input.checked) {
+                        this.classList.add('selected');
+                    } else {
+                        this.classList.remove('selected');
+                    }
+                }
+                
+                // Gérer les champs conditionnels
+                if (input && input.id === 'autreLeadership' && input.checked) {
+                    document.getElementById('autreLeadershipField').style.display = 'block';
+                } else if (input && input.id === 'autreLeadership' && !input.checked) {
+                    document.getElementById('autreLeadershipField').style.display = 'none';
+                }
+                
+                if (input && input.id === 'integrationOui' && input.checked) {
+                    document.getElementById('integrationOuiField').style.display = 'block';
+                } else if (input && input.id === 'integrationOui' && !input.checked) {
+                    document.getElementById('integrationOuiField').style.display = 'none';
+                }
+            });
+        });
+        
+        // Gérer les champs conditionnels au chargement
+        document.getElementById('autreLeadershipField').style.display = 'none';
+        document.getElementById('integrationOuiField').style.display = 'none';
+        
+        // Initialiser la barre de progression
+        updateProgressBar();
+    </script>
+</body>
+</html>
